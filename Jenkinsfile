@@ -1,23 +1,34 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3.9'
+        jdk 'JDK-17'
+    }
+
     stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Build') {
             steps {
-                echo 'Build en cours...'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Test') {
+        stage('Tests') {
             steps {
-                echo 'Tests en cours...'
+                bat 'mvn test'
             }
         }
 
-        stage('Deploy') {
+        stage('Archive') {
             steps {
-                echo 'Déploiement...'
+                archiveArtifacts artifacts: 'target/*.jar'
             }
         }
     }
