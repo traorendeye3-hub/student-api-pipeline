@@ -13,6 +13,13 @@ pipeline {
             }
         }
 
+        stage('Lint') {
+            steps {
+                // On lance l'analyse de style du code avec le plugin Checkstyle de Maven
+                bat 'mvn checkstyle:checkstyle'
+            }
+        }
+
         stage('Build') {
             steps {
                 bat 'mvn clean compile'
@@ -27,10 +34,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                // Étape 1 : On package l'application en ignorant les tests (puisqu'ils viennent d'être faits avant)
                 bat 'mvn package -DskipTests'
-                
-                // Étape 2 : On dit à Jenkins de sauvegarder le fichier JAR généré
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
