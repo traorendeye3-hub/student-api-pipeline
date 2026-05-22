@@ -15,13 +15,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                // On compile uniquement ici
+                bat 'mvn clean compile'
             }
         }
 
-        stage('Test Webhook') {
+        stage('Test') {
             steps {
-                echo 'Incroyable, le webhook fonctionne tout seul !'
+                // On exécute les tests unitaires de l'application
+                bat 'mvn test'
             }
         }
     }
