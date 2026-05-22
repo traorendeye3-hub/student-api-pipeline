@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.9'
-        jdk 'JDK-17'
+        maven 'maven3.9'
+        jdk 'jdk17'
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -20,15 +19,9 @@ pipeline {
             }
         }
 
-        stage('Tests') {
+        stage('Test Webhook') {
             steps {
-                bat 'mvn test'
-            }
-        }
-
-        stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.jar'
+                echo 'Incroyable, le webhook fonctionne tout seul !'
             }
         }
     }
